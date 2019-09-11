@@ -1,0 +1,58 @@
+#!/bin/bash
+
+touch ~/.bash_profile
+
+## Brew
+/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+
+## Node JS
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | bash
+nvm install lts/dubnium
+npm install -g ps1gen
+
+curl https://gist.githubusercontent.com/brunoziie/7cd2ecc083e70453b5431c37760e74b1/raw/d2934301adaa4e698ba0a6824cff5dfe7198ff36/ps1gen >> ~/.bash_profile
+
+## Apps
+brew cask install google-chrome
+brew cask install visual-studio-code
+brew cask install sublime-text
+brew cask install iterm2
+brew cask install spotify
+brew cask install slack
+brew cask install sequel-pro
+brew cask install skype
+brew cask install github
+brew cask install genymotion
+
+## Cocoapods
+sudo gem install xcodeproj
+sudo gem install cocoapods
+pod setup
+
+## Java
+brew tap AdoptOpenJDK/openjdk
+brew cask install adoptopenjdk8
+echo 'export JAVA_HOME=$(/usr/libexec/java_home -v 1.8)' >> ~/.bash_profile
+source ~/.bash_profile
+
+## Android SDK
+brew cask install android-sdk
+echo 'export ANDROID_HOME=/usr/local/share/android-sdk' >> ~/.bash_profile
+source ~/.bash_profile
+$ANDROID_HOME/tools/bin/sdkmanager "tools" "emulator" "platform-tools" "platforms;android-28" "build-tools;28.0.3" "extras;android;m2repository" "extras;google;m2repository"
+
+## MAMP
+sudo chown -R $(whoami) /usr/local/lib/pkgconfig
+chmod u+w /usr/local/lib/pkgconfig
+brew install mariadb
+
+curl -L -O https://github.com/phpbrew/phpbrew/raw/master/phpbrew
+chmod +x phpbrew
+sudo mv phpbrew /usr/local/bin/phpbrew
+brew install libxml++ libxml2 mcrypt mhash bzip2 libzip curl zlib gd libpng
+phpbrew install 5.6.30 +default +bz2="$(brew --prefix bzip2)" +zlib=/usr/local/opt/zlib/ -- --with-gd=shared
+
+
+## Tools
+brew install git bash-completion
+curl https://gist.githubusercontent.com/brunoziie/82dc6bae40083952b04d60d169d17314/raw/978007988d935d62ed04fa4567ca9e008dcdcc7d/git_completion >> ~/.bash_profile
